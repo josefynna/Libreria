@@ -92,58 +92,6 @@ def moda(vals):
   #retorno la moda
   #moda=categorias[i_max]  , ya no se resporta sola una
   return modas
-
-def rango(vals_in):
-  """
-  Calcula el rango de una lista
-  Detecta y elimina los NaN
-  Parametros
-  ----------
-  vals : list
-    Lista de numeros
-  Retorna
-  -------
-     Rango:float
-    Rango de los numeros (excluyendo NANs)
-  """
-  #eliminar los Nans
-  vals=[]
-  for v in vals_in:
-    if math.isfinite(v):
-      vals.append(v)
-  #determinar maximo y minimo desde 0
-  # forma 2- gues and check adivino luego rectifico
-  for v in vals:
-    if v<minimo:
-      minimo=v
-    if v>maximo:
-      maximo=v
-
-  return maximo-minimo
-  
-def rango(vals_in):
-    """
-    Calcula el rango de una lista de números.
-    Detecta y elimina los NaN.
-
-    Parámetros
-    ----------
-    vals_in : list
-        Lista de números.
-
-    Retorna
-    -------
-    float
-        Rango de los números (excluyendo NaNs).
-    """
-    # Eliminar los valores que no sean finitos (NaNs)
-    vals = [v for v in vals_in if math.isfinite(v)]
-
-    if not vals:  # Si no quedan valores válidos
-        return None
-
-    # Calcular el rango (máximo - mínimo)
-    return max(vals) - min(vals)
     
 def rango(vals_in):
   """
