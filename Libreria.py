@@ -284,8 +284,8 @@ def correlacion(vals_x,vals_y):
   rxy=covarianza(x,y)/(varianza(x)*varianza(y))
   return rxy  
   
- def cuartiles(vals_in):
-    """
+def cuartiles(vals_in):
+  """
       Calcula el cuartil de una lista de numeros
       elimina y detecta los NANS
       Parametros
@@ -296,12 +296,12 @@ def correlacion(vals_x,vals_y):
       -------
          Rango intercuartil:float
         Rango
-    """
+  """
       # eliminamos los nans
-      vals = [v for v in vals_in if math.isfinite(v)]
+  vals = [v for v in vals_in if math.isfinite(v)]
 
-      if len(vals) == 0:
-          return None
+  if len(vals) == 0:
+      return None
 
       vals.sort()
 
