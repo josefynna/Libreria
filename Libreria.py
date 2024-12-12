@@ -48,50 +48,37 @@ def mediana(vals_in):
   
   
 def moda(vals):
-  """
-  Calcula la moda de una lista de numeros
-  Parametros
-  ----------
-  vals : list
-    Lista de numeros
-  Retorna
-  -------
-     Moda:str
-    Moda de los numeros en la lista
-  """
-  #encontrar conjuto de elementos unicos
-  categorias=[]
-  for v in vals:
-    if v not in categorias:
-      categorias.append(v)
+    """
+    Calcula la moda de una lista de valores (pueden ser números o cadenas)
+    Parametros
+    ----------
+    vals : list
+        Lista de valores
+    Retorna
+    -------
+    Moda : list
+        Lista con los valores que más se repiten
+    """
+    # Diccionario para contar las ocurrencias
+    frecuencia = {}
 
-  #obtenr el numero de cuentass en la muestra
-  #para cada una de las categorias
-  cuentas=[]
-  for c in categorias:
-    n=0
+    # Contamos las ocurrencias de cada valor
     for v in vals:
-      if v==c:
-        n=n+1
-    cuentas.append(n)
+        if v in frecuencia:
+            frecuencia[v] += 1
+        else:
+            frecuencia[v] = 1
 
-  #encontrar la posicion del valor de la lista con el maximo de cuenta
-  # guess and check
-  i_max=0
-  val_max=cuentas[0]
-  for i in range(1,len(cuentas)):
-    if cuentas[i]>val_max:
-      i_max=i
-      val_max=cuentas[i]
-  #determinar todas las categorias que tenga el numero maximo de cuentas,mas de una moda
-  #val_max dice cual es el valor maximo en la tabla de frecuencia
-  modas=[]#se guardan todas las categorias que tengan el mismo numero, nuermo maximo
-  for i in range(len(cuentas)):
-    if cuentas[i]==val_max:
-      modas.append(categorias[i])
-  #retorno la moda
-  #moda=categorias[i_max]  , ya no se resporta sola una
-  return modas
+    # Encontramos el valor máximo de ocurrencias
+    if len(frecuencia) == 0:  # Si la lista está vacía
+        return []
+
+    max_freq = max(frecuencia.values())
+
+    # Encontramos todas las categorías que tengan el valor máximo de ocurrencias
+    modas = [k for k, v in frecuencia.items() if v == max_freq]
+
+    return modas
     
 def rango(vals_in):
   """
@@ -326,3 +313,20 @@ def correlacion(vals_x,vals_y):
 
 
   return Q1, Q3
+  
+  
+  def mad(vals_in):
+    """
+    Calcula la desviación media absoluta de una lista de números
+    elimina y detecta NANAs
+    -------
+    vals:list
+        LiSsta de números
+    retorna
+    -------
+    Desviación media absoluta : float
+        desviación media absoluta de los números en la lista
+    """
+    vals = [v for v in vals_in if math.isfinite(v)]
+    prom = promedio(vals)
+    return sum(abs(v - prom) for v in vals) / len(vals)
