@@ -284,35 +284,36 @@ def correlacion(vals_x,vals_y):
   rxy=covarianza(x,y)/(varianza(x)*varianza(y))
   return rxy  
   
-  def cuartiles(vals_in):
-  """
-  Calcula el cuartil de una lista de numeros
-  elimina y detecta los NANS
-  Parametros
-  ----------
-  vals : list
-    Lista de numeros
-  Retorna
-  -------
-     Rango intercuartil:float
-    Rango
-  """
-  # eliminamos los nans
-  vals = [v for v in vals_in if math.isfinite(v)]
+ def cuartiles(vals_in):
+    """
+      Calcula el cuartil de una lista de numeros
+      elimina y detecta los NANS
+      Parametros
+      ----------
+      vals : list
+        Lista de numeros
+      Retorna
+      -------
+         Rango intercuartil:float
+        Rango
+    """
+      # eliminamos los nans
+      vals = [v for v in vals_in if math.isfinite(v)]
 
-  if len(vals) == 0:
-      return None
+      if len(vals) == 0:
+          return None
 
-  vals.sort()
+      vals.sort()
 
-  # Calculamos los percentiles 25% (Q1) y 75% (Q3)
-  Q1 = vals[int(len(vals) * 25 / 100)]
-  Q3 = vals[int(len(vals) * 75 / 100)]
+      # Calculamos los percentiles 25% (Q1) y 75% (Q3)
+      Q1 = vals[int(len(vals) * 25 / 100)]
+      Q3 = vals[int(len(vals) * 75 / 100)]
 
+      return Q1, Q3
+  
   # Calculamos el rango intercuartil (IQR)
 
 
-  return Q1, Q3
   
   
   def mad(vals_in):
