@@ -20,32 +20,7 @@ def promedio(vals_in):
   promedio=sum(vals)/len(vals)
   return promedio
   
-def mediana(vals_in):
-  """
-  Calcula la mediana de una lista de numeros
-  Parametros
-  ----------
-  vals : list
-    Lista de numeros
-  Retorna
-  -------
-     Mediana:float
-    Mediana de los numeros en la lista excluyendo Nans
-  """
-  #eliminamos los valores que sean Nan
-  vals=[v for v in vals_in if math.isfinite(v)]
 
-    #ordenar lista
-  vals.sort()
-    #determinar si es par o impar
-  if len(vals)%2 !=0:
-    k=len(vals)//2 #valor de al medio mas uno
-    mediana=vals[k]
-  else:
-    k=len(vals)//2 #si no es impar el
-    mediana=(vals[k-1]+vals[k])/2.0
-  return mediana
-  
   
 def moda(vals):
     """
@@ -219,31 +194,6 @@ def iqr(vals_in):
   return iqr_r
   
   
-def mad(vals_in):
-  """
-  Calcula la desviacion media absoluta de una lista de numeros
-  elimina y detecta los NANS
-  Parametros
-  ----------
-  vals : list
-    Lista de numeros
-  Retorna
-  -------
-     Desviacion media absoluta:float
-    Desviacion
-
-  """
-  #eliminamos los valores NANs
-  vals = [v for v in vals_in if math.isfinite(v)]
-  if len(vals) == 0:
-    return None
-
-  # promediooo
-  promedio = sum(vals) / len(vals)
-
-  mad = sum(abs(v - promedio) for v in vals) / len(vals)
-  return mad
-  
 # Covarianza
 def covarianza(x, y):
     """
@@ -345,10 +295,56 @@ def cuartiles(vals_in):
         Q3 = lower + (upper - lower) * (pos_Q3 - math.floor(pos_Q3))
     
     return Q1, Q3
-
-
-  # Calculamos el rango intercuartil (IQR)
   
+  
+# Función para calcular el percentil
+def calcular_percentil(p, vals_in):
+    """
+        Calcula un percentil p de los valores dados.
+        Utiliza la lógica de interpolación simple.
+
+        Parámetros:
+        p (int): El percentil deseado (ejemplo: 5, 50, 95, etc.)
+        vals_in (list): Lista de valores sobre los cuales calcular el percentil
+
+        Retorna:
+        float: El valor correspondiente al percentil p
+    """
+ 
+    vals_ordenada = sorted(vals)
+    n = len(vals_ordenada)
+    k = (p / 100) * (n - 1)
+    f = math.floor(k)
+    c = math.ceil(k)
+
+    if f == c:
+        return vals_ordenada[int(k)]
+    else:
+        d0 = vals_ordenada[f] * (c - k)
+        d1 = vals_ordenada[c] * (k - f)
+        return d0 + d1
+
+# Función para calcular la mediana
+def mediana(vals_in):
+  """
+      Calcula la mediana de una lista de numeros
+      Parametros
+      ----------
+      vals : list
+        Lista de numeros
+      Retorna
+      -------
+         Mediana:float
+    Mediana de los numeros en la lista excluyendo Nans
+  """
+    vals_ordenada = sorted(vals_in)
+    n = len(vals_ordenada)
+    if n % 2 == 1:
+        return vals_ordenada[n // 2]
+    else:
+        return (vals_ordenada[(n // 2) - 1] + vals_ordenada[n // 2]) / 2
+
+# Función para calcular MAD (Desviación Absoluta Mediana)
 def mad(vals_in):
   """
     Calcula la desviación media absoluta de una lista de números
@@ -361,6 +357,6 @@ def mad(vals_in):
     Desviación media absoluta : float
         desviación media absoluta de los números en la lista
   """
-  vals = [v for v in vals_in if math.isfinite(v)]
-  prom = promedio(vals)
-  return sum(abs(v - prom) for v in vals) / len(vals)
+    m = mediana(vals_in)
+    diferencias_absolutas = [abs(x - m) for x in vals_in]
+    return mediana(diferencias_absolutas)
