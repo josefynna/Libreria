@@ -261,7 +261,7 @@ def covarianza(x, y):
     mean_y = promedio(y)
     return sum((xi - mean_x) * (yi - mean_y) for xi, yi in zip(x, y)) / len(x) if x else 0.0
   
-def correlacion(vals_x,vals_y):
+def correlacion(x,y):
   """
   Calcula la correlacion de dos listas de numeros
   elimina y detecta los NANS
