@@ -311,24 +311,24 @@ def calcular_percentil(datos, k):
         Retorna:
         float: El valor correspondiente al percentil p
   """
-    # Eliminar valores NaN
-    datos_sinNan = []
-    for x in datos:
-        if x == x:
-            datos_sinNan.append(x)
+ # Eliminar valores NaN
+  datos_sinNan = []
+  for x in datos:
+    if x == x:
+      datos_sinNan.append(x)
     # Ordenar los datos
-    datos_ordenados = sorted(datos_sinNan)
+  datos_ordenados = sorted(datos_sinNan)
     # Calcular la posición del percentil
-    n = len(datos_ordenados)
-    posicion = (k / 100) * (n + 1)
+  n = len(datos_ordenados)
+  posicion = (k / 100) * (n + 1)
     # Si la posición es un número entero, devolvemos el valor en esa posición
-    if posicion.is_integer():
-        return datos_ordenados[int(posicion) - 1]
+  if posicion.is_integer():
+    return datos_ordenados[int(posicion) - 1]
     # Si la posición no es un número entero, interpolamos entre los dos valores más cercanos
-    else:
-        lower = datos_ordenados[int(posicion) - 1]
-        upper = datos_ordenados[int(posicion)]
-        return lower + (upper - lower) * (posicion - int(posicion))
+  else:
+    lower = datos_ordenados[int(posicion) - 1]
+    upper = datos_ordenados[int(posicion)]
+    return lower + (upper - lower) * (posicion - int(posicion))
 
 # Función para calcular la mediana
 
