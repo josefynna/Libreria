@@ -162,24 +162,31 @@ def std(vals_in):
   return varianza**0.5
   
   
-def percentiles(vals_in):
-  # se ordenan los valores
-  vals_in.sort()
+def calcular_percentil(p, vals_in):
+    """
+        Calcula un percentil p de los valores dados.
+        Utiliza la lógica de interpolación simple.
 
-  percentiles_vals = []
+        Parámetros:
+        p (int): El percentil deseado (ejemplo: 5, 50, 95, etc.)
+        vals_in (list): Lista de valores sobre los cuales calcular el percentil
 
-  # se calculan los percentiles 25%, 50% y 75%
-  for p in [25, 50, 75]:
- # índice del percentil p
-      index = int(len(vals_in) * p / 100)
+        Retorna:
+        float: El valor correspondiente al percentil p
+    """
+ 
+    vals_in.sort()
+    # Número de elementos
+    n = len(vals_in)
 
-      # se asegura que no se exceda el valor de la lista
-      index = min(index, len(vals_in) - 1)
+    k = (p / 100) * (n - 1)
 
-      percentiles_vals.append(vals_in[index])
-
-  return percentiles_vals
-  
+    f = int(k)
+    c = k - f
+    if f + 1 < n:
+        return vals_in[f] + c * (vals_in[f + 1] - vals_in[f])
+    else:
+        return vals_in[f]
   
 def iqr(vals_in):
   """
