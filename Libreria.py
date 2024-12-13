@@ -298,7 +298,8 @@ def cuartiles(vals_in):
   
   
 # Función para calcular el percentil
-def calcular_percentil(p, vals_in):
+
+def calcular_percentil(datos, k):
   """
         Calcula un percentil p de los valores dados.
         Utiliza la lógica de interpolación simple.
@@ -310,22 +311,28 @@ def calcular_percentil(p, vals_in):
         Retorna:
         float: El valor correspondiente al percentil p
   """
- 
-  vals_ordenada = sorted(vals_in)
-  n = len(vals_ordenada)
-  k = (p / 100) * (n - 1)
-  f = math.floor(k)
-  c = math.ceil(k)
-
-  if f == c:
-    return vals_ordenada[int(k)]
-  else:
-    d0 = vals_ordenada[f] * (c - k)
-    d1 = vals_ordenada[c] * (k - f)
-    return d0 + d1
+    # Eliminar valores NaN
+    datos_sinNan = []
+    for x in datos:
+        if x == x:
+            datos_sinNan.append(x)
+    # Ordenar los datos
+    datos_ordenados = sorted(datos_sinNan)
+    # Calcular la posición del percentil
+    n = len(datos_ordenados)
+    posicion = (k / 100) * (n + 1)
+    # Si la posición es un número entero, devolvemos el valor en esa posición
+    if posicion.is_integer():
+        return datos_ordenados[int(posicion) - 1]
+    # Si la posición no es un número entero, interpolamos entre los dos valores más cercanos
+    else:
+        lower = datos_ordenados[int(posicion) - 1]
+        upper = datos_ordenados[int(posicion)]
+        return lower + (upper - lower) * (posicion - int(posicion))
 
 # Función para calcular la mediana
-def mediana(vals_in):
+
+def mediana(datos):
   """
       Calcula la mediana de una lista de numeros
       Parametros
@@ -337,12 +344,16 @@ def mediana(vals_in):
          Mediana:float
     Mediana de los numeros en la lista excluyendo Nans
   """
-  vals_ordenada = sorted(vals_in)
-  n = len(vals_ordenada)
-  if n % 2 == 1:
-    return vals_ordenada[n // 2]
+  datos_sinNan=[]
+  for x in datos:
+    if x == x:
+      datos_sinNan.append(x)
+  datos_ordenados=sorted(datos_sinNan)
+  n = len(datos_ordenados)
+  if n % 2 == 0:
+    return (datos_ordenados[n//2-1] + datos_ordenados[n//2])/2
   else:
-    return (vals_ordenada[(n // 2) - 1] + vals_ordenada[n // 2]) / 2
+    return datos_ordenados[n//2]
 
 # Función para calcular MAD (Desviación Absoluta Mediana)
 def mad(vals_in):
