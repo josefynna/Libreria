@@ -274,7 +274,7 @@ def correlacion(x,y):
      Correlacion:float
     Correlacion de
   """
-    if len(x) != len(y):
+    if (len(x) != len(y)):
       return None  
 
     n = len(x)
