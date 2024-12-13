@@ -311,18 +311,18 @@ def calcular_percentil(p, vals_in):
         float: El valor correspondiente al percentil p
     """
  
-    vals_ordenada = sorted(vals)
-    n = len(vals_ordenada)
-    k = (p / 100) * (n - 1)
-    f = math.floor(k)
-    c = math.ceil(k)
+  vals_ordenada = sorted(vals)
+  n = len(vals_ordenada)
+  k = (p / 100) * (n - 1)
+  f = math.floor(k)
+  c = math.ceil(k)
 
-    if f == c:
-        return vals_ordenada[int(k)]
-    else:
-        d0 = vals_ordenada[f] * (c - k)
-        d1 = vals_ordenada[c] * (k - f)
-        return d0 + d1
+  if f == c:
+    return vals_ordenada[int(k)]
+  else:
+    d0 = vals_ordenada[f] * (c - k)
+    d1 = vals_ordenada[c] * (k - f)
+    return d0 + d1
 
 # Función para calcular la mediana
 def mediana(vals_in):
@@ -337,12 +337,12 @@ def mediana(vals_in):
          Mediana:float
     Mediana de los numeros en la lista excluyendo Nans
   """
-    vals_ordenada = sorted(vals_in)
-    n = len(vals_ordenada)
-    if n % 2 == 1:
-        return vals_ordenada[n // 2]
-    else:
-        return (vals_ordenada[(n // 2) - 1] + vals_ordenada[n // 2]) / 2
+  vals_ordenada = sorted(vals_in)
+  n = len(vals_ordenada)
+  if n % 2 == 1:
+    return vals_ordenada[n // 2]
+  else:
+    return (vals_ordenada[(n // 2) - 1] + vals_ordenada[n // 2]) / 2
 
 # Función para calcular MAD (Desviación Absoluta Mediana)
 def mad(vals_in):
@@ -357,6 +357,6 @@ def mad(vals_in):
     Desviación media absoluta : float
         desviación media absoluta de los números en la lista
   """
-    m = mediana(vals_in)
-    diferencias_absolutas = [abs(x - m) for x in vals_in]
-    return mediana(diferencias_absolutas)
+  m = mediana(vals_in)
+  diferencias_absolutas = [abs(x - m) for x in vals_in]
+  return mediana(diferencias_absolutas)
