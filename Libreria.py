@@ -285,9 +285,11 @@ def correlacion(vals_x,vals_y):
   return rxy  
 
 
+import math
+
 def cuartiles(vals_in):
     """
-    Calcula los cuartiles (Q1, Q3) y el rango intercuartil (IQR) de una lista de números.
+    Calcula los cuartiles (Q1, Q3) de una lista de números.
     Elimina valores NaN e infinitos.
     
     Parámetros
@@ -298,7 +300,7 @@ def cuartiles(vals_in):
     Retorna
     -------
     tuple
-        Un tuple con el cuartil 1 (Q1), cuartil 3 (Q3) y el rango intercuartil (IQR).
+        Un tuple con el cuartil 1 (Q1) y cuartil 3 (Q3).
         Si no se puede calcular, retorna None.
     """
     # Eliminar NaNs y valores infinitos
@@ -310,26 +312,29 @@ def cuartiles(vals_in):
     # Ordenar los valores
     vals.sort()
     
-    # Función interna para calcular el percentil dado un valor p (0-100)
-    def calcular_percentil(datos, p):
-        k = (len(datos) - 1) * p / 100
-        f = math.floor(k)
-        c = math.ceil(k)
-        if f == c:
-            return datos[int(k)]
-        else:
-            d0 = datos[f] * (c - k)
-            d1 = datos[c] * (k - f)
-            return d0 + d1
-    
     # Calcular Q1 (percentil 25) y Q3 (percentil 75)
-    Q1 = calcular_percentil(vals, 25)
-    Q3 = calcular_percentil(vals, 75)
+    n = len(vals)
     
-    # Calcular el rango intercuartil (IQR)
-    IQR = Q3 - Q1
+    # Cálculo del cuartil 1 (Q1)
+    pos_Q1 = (n + 1) * 25 / 100
+    if pos_Q1.is_integer():
+        Q1 = vals[int(pos_Q1) - 1]
+    else:
+        lower = vals[int(math.floor(pos_Q1)) - 1]
+        upper = vals[int(math.ceil(pos_Q1)) - 1]
+        Q1 = lower + (upper - lower) * (pos_Q1 - math.floor(pos_Q1))
     
-    return Q1, Q3, IQR
+    # Cálculo del cuartil 3 (Q3)
+    pos_Q3 = (n + 1) * 75 / 100
+    if pos_Q3.is_integer():
+        Q3 = vals[int(pos_Q3) - 1]
+    else:
+        lower = vals[int(math.floor(pos_Q3)) - 1]
+        upper = vals[int(math.ceil(pos_Q3)) - 1]
+        Q3 = lower + (upper - lower) * (pos_Q3 - math.floor(pos_Q3))
+    
+    return Q1, Q3
+
 
   # Calculamos el rango intercuartil (IQR)
   
