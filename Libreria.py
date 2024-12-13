@@ -299,7 +299,7 @@ def cuartiles(vals_in):
   
 # Función para calcular el percentil
 def calcular_percentil(p, vals_in):
-    """
+  """
         Calcula un percentil p de los valores dados.
         Utiliza la lógica de interpolación simple.
 
@@ -309,9 +309,9 @@ def calcular_percentil(p, vals_in):
 
         Retorna:
         float: El valor correspondiente al percentil p
-    """
+  """
  
-  vals_ordenada = sorted(vals)
+  vals_ordenada = sorted(vals_in)
   n = len(vals_ordenada)
   k = (p / 100) * (n - 1)
   f = math.floor(k)
