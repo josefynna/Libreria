@@ -274,22 +274,22 @@ def correlacion(x,y):
      Correlacion:float
     Correlacion de
   """
-    if (len(x) != len(y)):
-      return None  
+  if (len(x) != len(y)):
+    return None  
 
-    n = len(x)
-    mean_x = sum(x) / n
-    mean_y = sum(y) / n
+  n = len(x)
+  mean_x = sum(x) / n
+  mean_y = sum(y) / n
 
-    num = sum((x[i] - mean_x) * (y[i] - mean_y) for i in range(n))
-    denom_x = sum((x[i] - mean_x) ** 2 for i in range(n))
-    denom_y = sum((y[i] - mean_y) ** 2 for i in range(n))
-    denominator = math.sqrt(denom_x * denom_y)
+  num = sum((x[i] - mean_x) * (y[i] - mean_y) for i in range(n))
+  denom_x = sum((x[i] - mean_x) ** 2 for i in range(n))
+  denom_y = sum((y[i] - mean_y) ** 2 for i in range(n))
+  denominator = math.sqrt(denom_x * denom_y)
 
-    if denominator == 0:
-        return None 
+  if denominator == 0:
+    return None 
 
-    return num / denominator
+  return num / denominator
 
 def cuartiles(vals_in):
     """
@@ -342,8 +342,8 @@ def cuartiles(vals_in):
 
   # Calculamos el rango intercuartil (IQR)
   
-  def mad(vals_in):
-    """
+def mad(vals_in):
+  """
     Calcula la desviación media absoluta de una lista de números
     elimina y detecta NANAs
     -------
@@ -353,7 +353,7 @@ def cuartiles(vals_in):
     -------
     Desviación media absoluta : float
         desviación media absoluta de los números en la lista
-    """
-    vals = [v for v in vals_in if math.isfinite(v)]
-    prom = promedio(vals)
-    return sum(abs(v - prom) for v in vals) / len(vals)
+  """
+  vals = [v for v in vals_in if math.isfinite(v)]
+  prom = promedio(vals)
+  return sum(abs(v - prom) for v in vals) / len(vals)
