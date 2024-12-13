@@ -283,30 +283,54 @@ def correlacion(vals_x,vals_y):
 
   rxy=covarianza(x,y)/(varianza(x)*varianza(y))
   return rxy  
-  
+
+
 def cuartiles(vals_in):
-  """
-    Calcula el cuartil de una lista de numeros
-    elimina y detecta los NANS
-      Parametros
-      ----------
-      vals : list
-        Lista de numeros
-      Retorna
-      -------
-         Rango intercuartil:float
-        Rango
-  """
-  # eliminamos los nans
-  vals = [v for v in vals_in if math.isfinite(v)]
-  if len(vals) == 0:
-    return None
+    """
+    Calcula los cuartiles (Q1, Q3) y el rango intercuartil (IQR) de una lista de números.
+    Elimina valores NaN e infinitos.
+    
+    Parámetros
+    ----------
+    vals_in : list
+        Lista de números.
+        
+    Retorna
+    -------
+    tuple
+        Un tuple con el cuartil 1 (Q1), cuartil 3 (Q3) y el rango intercuartil (IQR).
+        Si no se puede calcular, retorna None.
+    """
+    # Eliminar NaNs y valores infinitos
+    vals = [v for v in vals_in if math.isfinite(v)]
+    
+    if len(vals) == 0:
+        return None  # Si no hay datos válidos
+    
+    # Ordenar los valores
     vals.sort()
-  # Calculamos los percentiles 25% (Q1) y 75% (Q3)
-  Q1 = vals[int(len(vals) * 25 / 100)]
-  Q3 = vals[int(len(vals) * 75 / 100)]
-  return Q1, Q3
-  
+    
+    # Función interna para calcular el percentil dado un valor p (0-100)
+    def calcular_percentil(datos, p):
+        k = (len(datos) - 1) * p / 100
+        f = math.floor(k)
+        c = math.ceil(k)
+        if f == c:
+            return datos[int(k)]
+        else:
+            d0 = datos[f] * (c - k)
+            d1 = datos[c] * (k - f)
+            return d0 + d1
+    
+    # Calcular Q1 (percentil 25) y Q3 (percentil 75)
+    Q1 = calcular_percentil(vals, 25)
+    Q3 = calcular_percentil(vals, 75)
+    
+    # Calcular el rango intercuartil (IQR)
+    IQR = Q3 - Q1
+    
+    return Q1, Q3, IQR
+
   # Calculamos el rango intercuartil (IQR)
   
   def mad(vals_in):
