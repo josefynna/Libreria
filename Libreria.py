@@ -274,18 +274,22 @@ def correlacion(vals_x,vals_y):
      Correlacion:float
     Correlacion de
   """
-  x=[]
-  y=[]
-  for i in range(len(vals_x)):
-    if math.isfinite(vals_x[i]) and math.isfinite(vals_y[i]):
-      x.append(vals_x[i])
-      y.append(vals_y[i])
+    if len(x) != len(y):
+      return None  
 
-  rxy=covarianza(x,y)/(varianza(x)*varianza(y))
-  return rxy  
+    n = len(x)
+    mean_x = sum(x) / n
+    mean_y = sum(y) / n
 
+    num = sum((x[i] - mean_x) * (y[i] - mean_y) for i in range(n))
+    denom_x = sum((x[i] - mean_x) ** 2 for i in range(n))
+    denom_y = sum((y[i] - mean_y) ** 2 for i in range(n))
+    denominator = math.sqrt(denom_x * denom_y)
 
-import math
+    if denominator == 0:
+        return None 
+
+    return num / denominator
 
 def cuartiles(vals_in):
     """
