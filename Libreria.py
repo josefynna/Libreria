@@ -238,7 +238,7 @@ def mad(vals_in):
   return mad
   
 # Covarianza
-def covarianza(vals_x, vals_y):
+def covarianza(x, y):
     """
     Calcula la covarianza de dos listas de números.
     Detecta y elimina los NaNs.
